@@ -1,0 +1,7 @@
+CMakeLists.txt
+compile-commands.json
+.clangd
+.cache/
+build/*
+!build/app
+.DS_Store
