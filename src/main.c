@@ -32,6 +32,9 @@ typedef struct{
     u32 edges[12][2];
 }Cube;
 
+typedef struct {
+}Polyhedron;
+
 
 vec3f vec_add(vec3f p1, vec3f p2){
     return (vec3f){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z };
@@ -89,16 +92,17 @@ void renderCube(){
     SDL_RenderClear(renderer);
 
     f32 fov = 300;
-    camera_angle_x += 0.01;
-    camera_angle_y += 0.005;
+    camera_angle_y -= 0.0005;
     for (i32 i = 0; i < 12; i++){
         vec3f p1 = cube.vertices[cube.edges[i][0]];
         vec3f p2 = cube.vertices[cube.edges[i][1]];
         
         vec3f rp1 = rotate_y(p1, camera_angle_y);
         rp1 = rotate_x(rp1, camera_angle_x);
+        rp1 = rotate_z(rp1, camera_angle_z);
         vec3f rp2 = rotate_y(p2, camera_angle_y);
         rp2 = rotate_x(rp2, camera_angle_x);
+        rp2 = rotate_z(rp2, camera_angle_z);
 
         f32 px1, py1, px2, py2;
 
@@ -120,7 +124,10 @@ SDL_Event input_handler(SDL_Event event){
         }
         if (event.type == SDL_EVENT_MOUSE_MOTION){
             if (event.motion.state & SDL_BUTTON_LEFT){
+                camera_angle_y -= event.motion.xrel / 100;
+                camera_angle_x += event.motion.yrel / 100;
             }
+            // add momentum 
         }
     }
     return event;
