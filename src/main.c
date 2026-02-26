@@ -33,7 +33,9 @@ typedef struct{
 }Cube;
 
 typedef struct {
-}Polyhedron;
+    vec3f vertices[5];
+    u32 edges[8][2];
+}Pyramid;
 
 
 vec3f vec_add(vec3f p1, vec3f p2){
@@ -115,6 +117,44 @@ void renderCube(){
     SDL_RenderPresent(renderer);
 }
 
+void renderPyramid(){
+    Pyramid pyramid = {
+        .vertices = {
+            {0, -2, 0}, // height
+            {1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1} // base
+        },
+        .edges = {
+            {0, 1}, {0, 2}, {0, 3}, {0, 4}, // top
+            {1, 3}, {2, 4}, {2, 3}, {1, 4} // base
+        }
+    };
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(renderer);
+
+    f32 fov = 300;
+    camera_angle_y -= 0.0005;
+    for (i32 i = 0; i < 8; i++){
+        vec3f p1 = pyramid.vertices[pyramid.edges[i][0]];
+        vec3f p2 = pyramid.vertices[pyramid.edges[i][1]];
+        
+        vec3f rp1 = rotate_y(p1, camera_angle_y);
+        rp1 = rotate_x(rp1, camera_angle_x);
+        rp1 = rotate_z(rp1, camera_angle_z);
+        vec3f rp2 = rotate_y(p2, camera_angle_y);
+        rp2 = rotate_x(rp2, camera_angle_x);
+        rp2 = rotate_z(rp2, camera_angle_z);
+
+        f32 px1, py1, px2, py2;
+
+        project(rp1, fov, &px1, &py1);
+        project(rp2, fov, &px2, &py2);
+    
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+        SDL_RenderLine(renderer, px1, py1, px2, py2);
+    }
+    SDL_RenderPresent(renderer);
+}
+
 SDL_Event input_handler(SDL_Event event){
     while(SDL_PollEvent(&event)){
         if (event.type == SDL_EVENT_QUIT){
@@ -142,7 +182,8 @@ int main(void){
     SDL_Event event;
     while(running){
         input_handler(event);
-        renderCube();
+        //renderCube();
+        renderPyramid();
     }
     return 0;
 }
