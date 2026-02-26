@@ -47,14 +47,15 @@ int main(void){
         SDL_RenderClear(renderer);
 
 
-        vec2f p1 = {.x = 124, .y = 0};
-        vec2f p2 = {.x = 340, .y = 480};
-        vec2f p3 = {.x = 10, .y = 400};
+        vec2f p1 = {.x = 0, .y = 0};
+        vec2f p2 = {.x = WINDOW_WIDTH, .y = 0};
+        vec2f p3 = {.x = WINDOW_WIDTH, .y = WINDOW_HEIGHT};
+        vec2f p4 = {.x = 0, .y = WINDOW_HEIGHT};
         
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-        renderLine(renderer, p1, p3);
+        renderLine(renderer, p3, p1);
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-        renderLine(renderer, p1, p2);
+        renderLine(renderer, p4, p2);
 
         SDL_RenderPresent(renderer);
 
@@ -69,21 +70,60 @@ int main(void){
     return 0;
 }
 
-void renderLine(SDL_Renderer* renderer, vec2f p1, vec2f p2){
-    f32 dy = abs(p2.y - p1.y);   
-    f32 dx = abs(p2.x - p1.x);   
-    f32 D = (f32) 2*(dy-dx);
+void renderLine_low(SDL_Renderer* renderer, vec2f p1, vec2f p2){
+    f32 dx = p2.x - p1.x;
+    f32 dy = p2.y - p1.y;
+
+    f32 yi = 1;
+    if (dy < 0){
+        yi = -1;
+        dy = -dy;
+    }
     
+    f32 D = (2*dy)-dx;
     f32 y = p1.y;
+
     for (f32 x = p1.x; x < p2.x; x++){
-
         SDL_RenderPoint(renderer, x, y);
-
-        if (D > 0){
-            y++;
-            D += (f32) 2*(dy-dx);
-        }else {
-            D += (f32) 2*dy;
+        if ( D > 0 ){
+            y += yi;
+            D += 2*(dy - dx);
+        }else{
+            D += 2*dy;
         }
+    }
+}
+
+void renderLine_high(SDL_Renderer* renderer, vec2f p1, vec2f p2){
+    f32 dx = p2.x - p1.x;
+    f32 dy = p2.y - p1.y;
+
+    f32 xi = 1;
+    if (dy < 0){
+        xi = -1;
+        dx = -dx;
+    }
+    
+    f32 D = (2*dx)-dy;
+    f32 x = p1.x;
+
+    for (f32 y = p1.y; y < p2.x; y++){
+        SDL_RenderPoint(renderer, x, y);
+        if ( D > 0 ){
+            x += xi;
+            D += 2*(dx - dy);
+        }else{
+            D += 2*dx;
+        }
+    }
+}
+
+void renderLine(SDL_Renderer* renderer, vec2f p1, vec2f p2){
+    if ( fabsf(p2.y - p1.y) < fabsf(p2.x - p1.x)){
+        if ( p1.x > p2.x) renderLine_low(renderer, p2, p1);
+        else renderLine_low(renderer, p1, p2);
+    }else {
+        if (p1.y > p2.y) renderLine_high(renderer, p2, p1);
+        else renderLine_high(renderer, p1, p2);
     }
 }
