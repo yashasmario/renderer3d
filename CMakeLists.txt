@@ -8,20 +8,16 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fsanitize=address")
 
 find_package(SDL3 REQUIRED)
 
-find_package(OpenGL REQUIRED)
-
 add_executable(renderer
     src/main.c
-    glad/src/glad.c
+)
+add_executable(lines
+    src/lines.c
 )
 
-# Include directories
-target_include_directories(renderer PRIVATE
-    glad/include
-)
-
-# Link libraries
 target_link_libraries(renderer PRIVATE
     SDL3::SDL3
-    OpenGL::GL
+)
+target_link_libraries(lines PRIVATE
+    SDL3::SDL3
 )

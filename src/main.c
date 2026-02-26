@@ -52,18 +52,21 @@ void project(vec3f point, f32 fov, f32* px, f32* py){
     *px = ((point.x/z) * fov + windowWidth / 2);
     *py = ((point.y/z) * fov + windowHeight/ 2);
 }
+
 vec3f rotate_x(vec3f point, f32 a){
     f32 x = point.x;
     f32 y = point.y;
     f32 z = point.z;
     return (vec3f) { x, y*cosf(a) - z*sinf(a), z*cosf(a) + y*sinf(a) };
 }
+
 vec3f rotate_y(vec3f point, f32 a){
     f32 x = point.x;
     f32 y = point.y;
     f32 z = point.z;
     return (vec3f){ x*cosf(a) + z*sinf(a), y, z*cosf(a) - x*sinf(a) };
 }
+
 vec3f rotate_z(vec3f point, f32 a){
     f32 x = point.x;
     f32 y = point.y;
@@ -77,7 +80,6 @@ SDL_Renderer* renderer = NULL;
 bool running = true;
 
 void renderCube(){
-
     Cube cube = {
         .vertices = {
             {-1, -1, -1}, { 1, -1, -1}, { 1,  1, -1}, {-1,  1, -1},
@@ -94,7 +96,8 @@ void renderCube(){
     SDL_RenderClear(renderer);
 
     f32 fov = 300;
-    camera_angle_y -= 0.0005;
+    f32 camera_drift = 0.0002;
+    camera_angle_y -= camera_drift;
     for (i32 i = 0; i < 12; i++){
         vec3f p1 = cube.vertices[cube.edges[i][0]];
         vec3f p2 = cube.vertices[cube.edges[i][1]];
@@ -132,7 +135,8 @@ void renderPyramid(){
     SDL_RenderClear(renderer);
 
     f32 fov = 300;
-    camera_angle_y -= 0.0005;
+    f32 camera_drift = 0.0005;
+    camera_angle_y -= camera_drift;
     for (i32 i = 0; i < 8; i++){
         vec3f p1 = pyramid.vertices[pyramid.edges[i][0]];
         vec3f p2 = pyramid.vertices[pyramid.edges[i][1]];
@@ -182,8 +186,8 @@ int main(void){
     SDL_Event event;
     while(running){
         input_handler(event);
-        //renderCube();
-        renderPyramid();
+        renderCube();
+        // renderPyramid();
     }
     return 0;
 }
