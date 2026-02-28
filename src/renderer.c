@@ -186,8 +186,8 @@ int main(void){
     SDL_Event event;
     while(running){
         input_handler(event);
-        renderCube();
-        // renderPyramid();
+        // renderCube();
+        renderPyramid();
     }
     return 0;
 }

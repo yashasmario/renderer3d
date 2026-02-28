@@ -8,16 +8,20 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fsanitize=address")
 
 find_package(SDL3 REQUIRED)
 
-add_executable(renderer
-    src/main.c
-)
-add_executable(lines
-    src/lines.c
-)
+function(add_exe name)
+    add_executable (${name} src/${name}.c)
+endfunction()
+
+add_exe (renderer)
+add_exe (lines)
+add_exe (rectangle)
 
 target_link_libraries(renderer PRIVATE
     SDL3::SDL3
 )
 target_link_libraries(lines PRIVATE
+    SDL3::SDL3
+)
+target_link_libraries(rectangle PRIVATE
     SDL3::SDL3
 )
