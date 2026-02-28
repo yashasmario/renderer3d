@@ -4,30 +4,23 @@
 
 #include <SDL3/SDL.h>
 
-
-typedef uint8_t u8 ;
-typedef uint16_t u16 ;
-typedef uint32_t u32 ;
-typedef uint64_t u64 ;
-typedef int8_t i8 ;
-typedef int16_t i16 ;
-typedef int32_t i32 ;
-typedef int64_t i64 ;
-
-typedef float f32 ;
-typedef double d64 ;
-
-typedef struct {
-    f32 x, y;
-}vec2f;
+#include "../include/base.h"
+#include "../include/lines.h"
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
 bool running = true;
 
-void renderRect(SDL_Renderer* rernderer, vec2f p1, vec2f p2, vec2f p3, vec2f p4);
-void renderFillRect();
+typedef struct {
+    f32 x;
+    f32 y; 
+    f32 h;
+    f32 w;
+}RectF;
+
+void renderRect(SDL_Renderer* renderer, RectF* rect);
+void renderFillRect(SDL_Renderer* renderer, RectF* rect);
 
 int main(void){
     SDL_Window* window = NULL;
@@ -44,6 +37,15 @@ int main(void){
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
 
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+        RectF rect;
+        rect.h = rect.w = 150;
+        rect.x = rect.y = 100;
+
+        renderRect(renderer, &rect);
+
+        SDL_RenderPresent(renderer);
+
         while(SDL_PollEvent(&event)){
             if (event.type == SDL_EVENT_QUIT){
                 SDL_DestroyRenderer(renderer);
@@ -52,10 +54,19 @@ int main(void){
             }
         }
     }
-
     return 0;
 }
 
-void renderRect(SDL_Renderer* renderer, vec2f p1, vec2f p2, vec2f p3, vec2f p4){
+void renderRect(SDL_Renderer* renderer, RectF* rect){
+    f32 h = rect->h;
+    f32 w = rect->w;
+    f32 x = rect->x;
+    f32 y = rect->y;
     
+    renderLine(renderer, x, y, x+w, y);
+    renderLine(renderer, x+w, y, x+w, y+h);
+    renderLine(renderer, x+w, y+h, x, y+h);
+    renderLine(renderer, x, y+h, x, y);
 }
+
+void renderFillRect(SDL_Renderer* renderer, RectF* rect);

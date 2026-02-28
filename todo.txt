@@ -1,3 +1,2 @@
--[ ] planes/rectangles
+-[x] planes/rectangles
 -[ ] erm.. cube faces
-
