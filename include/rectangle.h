@@ -5,8 +5,7 @@
 
 typedef struct {
     f32 x, y, w, h;
-}RectF;
+}FRect;
 
-
-void renderRect(SDL_Renderer* renderer, RectF* rect);
-void renderFillRect(SDL_Renderer* renderer, RectF* rect);
+void renderRect(SDL_Renderer* renderer, FRect* rect);
+void renderFillRect(SDL_Renderer* renderer, FRect* rect);
