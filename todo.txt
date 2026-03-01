@@ -1,7 +1,7 @@
 -[x] planes/rectangles
 -[ ] erm.. cube faces
 
--[ ] fillrect
--[ ] filltriangle
+-[x] fillrect
+-[x] filltriangle
 
--[ ] triangle rasterization
+-[x] triangle rasterization
