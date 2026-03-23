@@ -12,6 +12,8 @@ find_package(SDL3 REQUIRED)
 add_library(renderlib
     src/lines.c
     src/matrix.c
+    src/rectangle.c
+    src/triangle.c
 )
 
 target_link_libraries(renderlib PUBLIC SDL3::SDL3)
@@ -22,4 +24,3 @@ function(add_exe name)
 endfunction()
 
 add_exe(renderer)
-add_exe(triangle)

@@ -1,7 +1,14 @@
 -[x] planes/rectangles
--[ ] erm.. cube faces
-
 -[x] fillrect
 -[x] filltriangle
-
 -[x] triangle rasterization
+
+-[ ] erm.. cube faces
+     - have a cube face data for each cube
+     - calculate the surface vector and like cross that with cam vector to get flat shading
+
+-[ ] zooming and actual camera movement
+-[ ] add momentum (dabbling in physics)
+-[ ] implement a zbuffer
+-[ ] button
+-[ ] color wheel

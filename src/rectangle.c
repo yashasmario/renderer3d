@@ -38,3 +38,7 @@ void renderFillRect(SDL_Renderer* renderer, FRect* rect){
         renderLine(renderer, x+1, y+i, x+w, y+i);
     }
 }
+
+void rotateRect(FRect* rect, f32 angle){
+
+}
