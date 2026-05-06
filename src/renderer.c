@@ -132,7 +132,6 @@ void renderCube(f32 dt){
             .v3 = project(v3),
         };
 
-
         FTriangle tri2 = {
             .v1 = project(v1),
             .v2 = project(v4),
@@ -141,7 +140,6 @@ void renderCube(f32 dt){
 
         SDL_SetRenderDrawColor(renderer, 120, 120, 120, SDL_ALPHA_OPAQUE);
         renderFillTriangle(renderer, &tri1);
-        SDL_SetRenderDrawColor(renderer, 150, 150, 150, SDL_ALPHA_OPAQUE);
         renderFillTriangle(renderer, &tri2);
     }
 
