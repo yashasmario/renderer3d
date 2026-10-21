@@ -1,0 +1,1 @@
+/usr/bin/cc  -g -fsanitize=address -Wall -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/renderer.dir/src/renderer.c.o -o renderer  -Wl,-rpath,/opt/homebrew/lib librenderlib.a /opt/homebrew/lib/libSDL3.0.dylib

@@ -1,0 +1,1 @@
+/usr/bin/cc  -g -fsanitize=address -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/app.dir/src/main.c.o CMakeFiles/app.dir/glad/src/glad.c.o -o app  -Wl,-rpath,/opt/homebrew/lib /opt/homebrew/lib/libSDL3.0.dylib -framework OpenGL

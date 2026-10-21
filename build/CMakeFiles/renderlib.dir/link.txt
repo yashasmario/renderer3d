@@ -1,0 +1,2 @@
+/usr/bin/ar qc librenderlib.a CMakeFiles/renderlib.dir/src/lines.c.o CMakeFiles/renderlib.dir/src/matrix.c.o CMakeFiles/renderlib.dir/src/rectangle.c.o CMakeFiles/renderlib.dir/src/triangle.c.o
+/usr/bin/ranlib librenderlib.a

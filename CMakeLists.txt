@@ -18,9 +18,8 @@ add_library(renderlib
 
 target_link_libraries(renderlib PUBLIC SDL3::SDL3)
 
-function(add_exe name)
-    add_executable(${name} src/${name}.c)
-    target_link_libraries(${name} PRIVATE SDL3::SDL3 renderlib)
-endfunction()
+add_executable(renderer src/renderer.c)
+target_link_libraries(renderer PRIVATE SDL3::SDL3 renderlib)
 
-add_exe(renderer)
+add_executable(wheel src/color_wheel.c)
+target_link_libraries(wheel PRIVATE SDL3::SDL3 renderlib)

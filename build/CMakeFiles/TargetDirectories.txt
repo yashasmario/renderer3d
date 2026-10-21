@@ -1,0 +1,5 @@
+/Users/dog/Code/renderer3d/build/CMakeFiles/renderlib.dir
+/Users/dog/Code/renderer3d/build/CMakeFiles/renderer.dir
+/Users/dog/Code/renderer3d/build/CMakeFiles/wheel.dir
+/Users/dog/Code/renderer3d/build/CMakeFiles/edit_cache.dir
+/Users/dog/Code/renderer3d/build/CMakeFiles/rebuild_cache.dir

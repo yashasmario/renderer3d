@@ -150,8 +150,6 @@ void input_handler(void){
     SDL_Event event;
     while(SDL_PollEvent(&event)){
         if (event.type == SDL_EVENT_QUIT){
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
             running = false;
         }
         if (event.type == SDL_EVENT_MOUSE_MOTION){
@@ -168,8 +166,11 @@ void input_handler(void){
 }
 
 int main(void){
-    SDL_CreateWindowAndRenderer("renderer3d", windowWidth, windowHeight, SDL_WINDOW_MOUSE_FOCUS, &window, &renderer);
-    if (window == NULL || renderer == NULL){
+    if (!SDL_Init(SDL_INIT_VIDEO)){
+        SDL_Log("Could not initialize SDL!: %s", SDL_GetError());
+        return 1;
+    }
+    if(!SDL_CreateWindowAndRenderer("renderer3d", windowWidth, windowHeight, SDL_WINDOW_MOUSE_FOCUS, &window, &renderer)){
         SDL_Log("Could not create window || renderer: %s", SDL_GetError());
         return 1;
     }
@@ -185,6 +186,13 @@ int main(void){
         input_handler();
         renderCube(dt);
     }
+
+    
+    // destroy window and context after quitting
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+
+
     return 0;
 }
 
